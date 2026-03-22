@@ -561,11 +561,16 @@ const FAQ = () => {
 const Contacto = () => {
   const [form, setForm] = useState({ nombre: '', correo: '', telefono: '', mensaje: '' })
   const [errores, setErrores] = useState({})
+  const [enviando, setEnviando] = useState(false)
+  const [exito, setExito] = useState(false)
+
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3bgFoOsVY3J-vdZa48gC_OuRuIWfXfz2NnZUtiZooZVdGhE06TZxxoOY6Ei_oAQoK8A/exec'
 
   const handle = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
     setErrores((prev) => ({ ...prev, [name]: '' }))
+    setExito(false)
   }
 
   const validar = () => {
@@ -582,15 +587,33 @@ const Contacto = () => {
       err.mensaje = 'El mensaje debe tener al menos 10 caracteres'
     return err
   }
+  
 
-  const enviar = (e) => {
+  const enviar = async (e) => {
     e.preventDefault()
     const err = validar()
     if (Object.keys(err).length > 0) {
       setErrores(err)
       return
     }
-    alert('Formulario válido. Pendiente conexión a Google Sheets.')
+
+    setEnviando(true)
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+
+      setExito(true)
+      setForm({ nombre: '', correo: '', telefono: '', mensaje: '' })
+    } catch (error) {
+      alert('Hubo un error al enviar. Intenta de nuevo.')
+    } finally {
+      setEnviando(false)
+    }
   }
 
   return (
@@ -604,30 +627,37 @@ const Contacto = () => {
             <div className="contacto__form-header">
               <h3>Mándanos un mensaje</h3>
             </div>
+            {exito && (
+              <div className="contacto__exito">
+                ✅ ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.
+              </div>
+            )}
             <form onSubmit={enviar} noValidate>
               <div className="form__row">
                 <div className="form__field">
                   <label>Nombre</label>
-                  <input type="text" name="nombre" value={form.nombre} onChange={handle} placeholder="Tu nombre completo" />
+                  <input type="text" name="nombre" value={form.nombre} onChange={handle} placeholder="Tu nombre completo" disabled={enviando} />
                   {errores.nombre && <span className="error">{errores.nombre}</span>}
                 </div>
                 <div className="form__field">
                   <label>Correo</label>
-                  <input type="email" name="correo" value={form.correo} onChange={handle} placeholder="tu@correo.com" />
+                  <input type="email" name="correo" value={form.correo} onChange={handle} placeholder="tu@correo.com" disabled={enviando} />
                   {errores.correo && <span className="error">{errores.correo}</span>}
                 </div>
               </div>
               <div className="form__field">
                 <label>Número de teléfono</label>
-                <input type="tel" name="telefono" value={form.telefono} onChange={handle} placeholder="+502 1234-5678" />
+                <input type="tel" name="telefono" value={form.telefono} onChange={handle} placeholder="+502 1234-5678" disabled={enviando} />
                 {errores.telefono && <span className="error">{errores.telefono}</span>}
               </div>
               <div className="form__field">
                 <label>Mensaje</label>
-                <textarea name="mensaje" value={form.mensaje} onChange={handle} placeholder="¿En qué podemos ayudarte?" rows={4} />
+                <textarea name="mensaje" value={form.mensaje} onChange={handle} placeholder="¿En qué podemos ayudarte?" rows={4} disabled={enviando} />
                 {errores.mensaje && <span className="error">{errores.mensaje}</span>}
               </div>
-              <button type="submit" className="btn btn--azul btn--full">Enviar mensaje</button>
+              <button type="submit" className="btn btn--azul btn--full" disabled={enviando}>
+                {enviando ? 'Enviando...' : 'Enviar mensaje'}
+              </button>
             </form>
           </div>
 
