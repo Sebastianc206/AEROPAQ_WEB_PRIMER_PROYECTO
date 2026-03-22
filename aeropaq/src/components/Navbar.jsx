@@ -1,76 +1,65 @@
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import './Navbar.css'
+import Logo from '../Imagenes/logo.png'
 
-function Navbar() {
+const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const location = useLocation()
 
-  const navLinks = [
-    { to: '/', label: 'Inicio' },
-    { to: '/servicios', label: 'Servicios' },
-    { to: '/cobertura', label: 'Cobertura' },
-    { to: '/como-funciona', label: 'Cómo Funciona' },
-    { to: '/sobre-nosotros', label: 'Nosotros' },
-    { to: '/faq', label: 'FAQ' },
-    { to: '/contacto', label: 'Contacto' },
-  ]
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id)
+    if (el) {
+      const offset = 80
+      const top = el.getBoundingClientRect().top + window.pageYOffset - offset
+      window.scrollTo({ top, behavior: 'smooth' })
+    }
+    setMenuOpen(false)
+  }
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar__inner">
         {/* Logo */}
-        <Link to="/" className="navbar__logo">
-          <span className="navbar__logo-icon">✈</span>
-          <span className="navbar__logo-text">Aero<strong>Paq</strong></span>
-        </Link>
+        <div className="navbar__logo" onClick={() => scrollTo('inicio')}>
+          <img src={Logo} alt="AeroPaq" className="navbar__logo-img" />
+          <span className="navbar__logo-text">
+            AERO<strong>PAQ</strong>
+          </span>
+        </div>
 
-        {/* Links desktop */}
-        <ul className="navbar__links">
-          {navLinks.map(link => (
-            <li key={link.to}>
-              <Link
-                to={link.to}
-                className={`navbar__link ${location.pathname === link.to ? 'navbar__link--active' : ''}`}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
+        {/* Links */}
+        <ul className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
+          <li><button onClick={() => scrollTo('servicios')}>Servicios</button></li>
+          <li><button onClick={() => scrollTo('cobertura')}>Cobertura</button></li>
+          <li><button onClick={() => scrollTo('como-funciona')}>Como funciona</button></li>
+          <li><button onClick={() => scrollTo('sobre-nosotros')}>Sobre nosotros</button></li>
+          <li><button onClick={() => scrollTo('faq')}>Preguntas Frecuentes</button></li>
+          <li><button onClick={() => scrollTo('contacto')}>Contactos</button></li>
         </ul>
 
-        {/* CTA Button */}
-        <Link to="/cotizador" className="navbar__cta">
-          Cotizar Envío
-        </Link>
+        {/* CTA */}
+        <button className="navbar__cta" onClick={() => scrollTo('cotizador')}>
+          Cotizar envío
+        </button>
 
-        {/* Hamburger mobile */}
+        {/* Hamburger */}
         <button
-          className={`navbar__hamburger ${menuOpen ? 'open' : ''}`}
+          className={`navbar__hamburger ${menuOpen ? 'navbar__hamburger--open' : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menú"
         >
-          <span />
-          <span />
-          <span />
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
-      </div>
-
-      {/* Mobile menu */}
-      <div className={`navbar__mobile ${menuOpen ? 'navbar__mobile--open' : ''}`}>
-        {navLinks.map(link => (
-          <Link
-            key={link.to}
-            to={link.to}
-            className={`navbar__mobile-link ${location.pathname === link.to ? 'active' : ''}`}
-            onClick={() => setMenuOpen(false)}
-          >
-            {link.label}
-          </Link>
-        ))}
-        <Link to="/cotizador" className="navbar__mobile-cta" onClick={() => setMenuOpen(false)}>
-          Cotizar Envío
-        </Link>
       </div>
     </nav>
   )
