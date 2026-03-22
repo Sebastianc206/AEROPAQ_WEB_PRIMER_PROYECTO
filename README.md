@@ -171,12 +171,12 @@ El sitio está diseñado para funcionar correctamente en **computadoras y teléf
 - [x] Resumen de servicios en Home
 - [x] Sección "Cómo funciona" (4 pasos)
 - [x] Footer
-- [ ] Página de Servicios
-- [ ] Página de Cobertura
-- [ ] Página Sobre Nosotros
-- [ ] FAQ
+- [x] Página de Servicios
+- [x] Página de Cobertura
+- [x] Página Sobre Nosotros
+- [x] FAQ
 - [ ] Formulario de Contacto con validaciones y Google Sheets
-- [ ] Cotizador de envíos
+- [x] Cotizador de envíos
 
 ---
 
