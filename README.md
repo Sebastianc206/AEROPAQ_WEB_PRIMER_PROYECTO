@@ -1,6 +1,6 @@
-# AeroPaq — Sitio Web Corporativo
+# AeroPaq 
 
-Plataforma web estática para la empresa de paquetería **AeroPaq**, desarrollada como parte del Proyecto de Aplicación 1 del curso de Programación Web — Universidad Rafael Landívar, 1S2026.
+Plataforma web estática para la empresa de paquetería **AeroPaq**, desarrollada como parte del Proyecto de Aplicación 1 del curso de Programación Web — 
 
 El sitio comunica la propuesta de valor de AeroPaq, sus servicios, cobertura, proceso de envío y permite a los usuarios cotizar envíos y contactar a la empresa.
 
