@@ -27,7 +27,7 @@ El sitio comunica la propuesta de valor de AeroPaq, sus servicios, cobertura, pr
 | CSS3 | — | Estilos por componente |
 | [Node.js](https://nodejs.org/) | 22.x | Entorno de ejecución |
 | [npm](https://www.npmjs.com/) | 10.x | Gestión de dependencias |
-| Google Apps Script | — | Backend para formulario de contacto |
+| Google Apps Script | — | Web App para recibir datos del formulario y escribirlos en Google Sheets |
 
 > Para verificar tus versiones locales: `node -v` y `npm -v`
 
@@ -142,7 +142,28 @@ Se optó por **CSS puro por componente** siguiendo los requisitos del proyecto q
 
 ### Formulario de contacto con Google Apps Script
 
-El formulario de contacto envía los datos directamente a **Google Sheets** mediante un **Google Apps Script** desplegado como Web App. Esto permite almacenar las respuestas sin necesidad de un backend propio, manteniendo el sitio como una solución completamente estática.
+El formulario de contacto envía los datos directamente a **Google Sheets** mediante 
+un **Google Apps Script** desplegado como Web App. Esto permite almacenar las 
+respuestas sin necesidad de un backend propio, manteniendo el sitio como una 
+solución completamente estática.
+
+El flujo de datos es el siguiente:
+
+1. El usuario llena y envía el formulario en el sitio
+2. React realiza un `fetch POST` con los datos en formato JSON hacia el endpoint 
+   del Apps Script
+3. El script recibe los datos, valida que existan encabezados en la hoja y 
+   agrega una nueva fila con: fecha, nombre, correo, teléfono y mensaje
+4. Los datos quedan almacenados en Google Sheets de forma automática
+
+Se utilizó `mode: 'no-cors'` en el fetch debido a que Google Apps Script no 
+permite CORS desde dominios externos. Esto significa que el sitio no puede leer 
+la respuesta del servidor, pero los datos sí se escriben correctamente en la hoja.
+
+El formulario incluye validaciones en el frontend para: nombre (mínimo 2 
+caracteres), correo (formato válido), teléfono (7-15 dígitos) y mensaje 
+(mínimo 10 caracteres). El botón se deshabilita mientras se envía para evitar 
+envíos duplicados y se muestra un mensaje de éxito al completarse.
 
 ### Estrategia de ramas en Git
 
@@ -174,7 +195,7 @@ El sitio está diseñado para funcionar correctamente en **computadoras y teléf
 - [x] Página de Cobertura
 - [x] Página Sobre Nosotros
 - [x] FAQ
-- [ ] Formulario de Contacto con validaciones y Google Sheets
+- [x] Formulario de Contacto con validaciones y Google Sheets
 - [x] Cotizador de envíos
 
 ---
