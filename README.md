@@ -1,5 +1,4 @@
 # AEROPAQ_WEB_PRIMER_PROYECTO
-# AeroPaq — Sitio Web Corporativo
 
 Plataforma web estática para la empresa de paquetería **AeroPaq**, desarrollada como parte del Proyecto de Aplicación 1 del curso de Programación Web — Universidad Rafael Landívar, 1S2026.
 
