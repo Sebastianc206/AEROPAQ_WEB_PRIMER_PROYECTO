@@ -38,8 +38,8 @@ const Navbar = () => {
         {/* Links */}
         <ul className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
           <li><button onClick={() => scrollTo('servicios')}>Servicios</button></li>
-          <li><button onClick={() => scrollTo('cobertura')}>Cobertura</button></li>
           <li><button onClick={() => scrollTo('como-funciona')}>Como funciona</button></li>
+          <li><button onClick={() => scrollTo('cobertura')}>Cobertura</button></li>
           <li><button onClick={() => scrollTo('sobre-nosotros')}>Sobre nosotros</button></li>
           <li><button onClick={() => scrollTo('faq')}>Preguntas Frecuentes</button></li>
           <li><button onClick={() => scrollTo('contacto')}>Contactos</button></li>
