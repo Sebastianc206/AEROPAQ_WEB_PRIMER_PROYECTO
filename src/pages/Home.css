@@ -92,9 +92,7 @@
   margin-top: 4px;
 }
 
-/* ══════════════════════════════════════
-   HERO
-══════════════════════════════════════ */
+/* HERO */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -200,7 +198,7 @@
   font-weight: 500;
 }
 
-/* Tracking card */
+/* Tarjeta de seguimiento */
 .hero__card {
   background: rgba(255,255,255,0.12);
   backdrop-filter: blur(16px);

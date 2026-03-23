@@ -19,9 +19,7 @@ import ImgCorreo from '../Imagenes/Correo.png'
 import ImgUbicaciones from '../Imagenes/ubicaciones.png'
 import ImgLogo from '../Imagenes/logo.png'
 
-/* 
-PAGINA DE INICIO.
-*/
+/* PAGINA DE INICIO */
 const Hero = () => {
   const scrollTo = (id) => {
     const el = document.getElementById(id)
@@ -35,7 +33,7 @@ const Hero = () => {
     <section className="hero" id="inicio">
       <div className="hero__bg" />
       <div className="container hero__inner">
-        {/* Left */}
+        {/* Izquierda */}
         <div className="hero__left">
           <h1 className="hero__title">
             Envíos<br />
@@ -55,7 +53,7 @@ const Hero = () => {
             </button>
           </div>
 
-          {/* Stats */}
+          {/* Estadisticas */}
           <div className="hero__stats">
             <div className="hero__stat">
               <div className="hero__stat-icon">
@@ -81,7 +79,7 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right - Tracking card */}
+        {/* Derecha - Tarjeta de seguimiento */}
         <div className="hero__right">
           <div className="hero__card">
             <div className="hero__card-header">
@@ -117,9 +115,7 @@ const Hero = () => {
   )
 }
 
-/* 
-SERVICIOS
-*/
+/* SERVICIOS */
 const servicios = [
   {
     img: ImgCamion,
@@ -167,9 +163,7 @@ const Servicios = () => (
   </section>
 )
 
-/*
-COTIZADOR
-*/
+/* COTIZADOR */
 const TARIFAS = {
   misma_ciudad: { base: 25, por_kg: 5, dias: '1-2 días' },
   otro_departamento: { base: 55, por_kg: 8, dias: '2-4 días' },
@@ -387,9 +381,7 @@ const Cotizador = () => {
   )
 }
 
-/*
-CÓMO FUNCIONA
-*/
+/* CÓMO FUNCIONA */
 const pasos = [
   { img: ImgPedir,     titulo: 'Solicitud',   desc: 'Obtén una cotización y realiza tu orden de envío en línea o por teléfono.' },
   { img: ImgPaquete,   titulo: 'Recolección', desc: 'Recolectamos tu paquete en tu ubicación según tu conveniencia.' },
@@ -420,9 +412,7 @@ const ComoFunciona = () => (
   </section>
 )
 
-/*
-COBERTURA
-*/
+/* COBERTURA */
 const Cobertura = () => (
   <section className="cobertura" id="cobertura">
     <div className="container">
@@ -468,9 +458,7 @@ const Cobertura = () => (
   </section>
 )
 
-/*
-SOBRE NOSOTROS
-*/
+/* SOBRE NOSOTROS */
 const SobreNosotros = () => (
   <section className="sobre" id="sobre-nosotros">
     <div className="container">
@@ -519,9 +507,7 @@ const SobreNosotros = () => (
   </section>
 )
 
-/*
-PREGUNTAS FRECUENTES
- */
+/* PREGUNTAS FRECUENTES */
 const faqs = [
   { pregunta: '¿Cómo puedo rastrear mi envío?', respuesta: 'Puedes rastrear tu paquete ingresando el número de seguimiento en nuestra página principal o llamando al servicio al cliente 24/7.' },
   { pregunta: '¿Qué artículos está prohibido enviar?', respuesta: 'Los artículos prohibidos incluyen materiales peligrosos, sustancias inflamables, explosivos, drogas ilegales, armas y productos perecederos sin el embalaje adecuado.' },
@@ -555,9 +541,7 @@ const FAQ = () => {
   )
 }
 
-/*
- CONTACTO 
-*/
+/*CONTACTO */
 const Contacto = () => {
   const [form, setForm] = useState({ nombre: '', correo: '', telefono: '', mensaje: '' })
   const [errores, setErrores] = useState({})
@@ -628,9 +612,7 @@ const Contacto = () => {
               <h3>Mándanos un mensaje</h3>
             </div>
             {exito && (
-              <div className="contacto__exito">
-                ✅ ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.
-              </div>
+              <div className="contacto__exito">¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.</div>
             )}
             <form onSubmit={enviar} noValidate>
               <div className="form__row">
