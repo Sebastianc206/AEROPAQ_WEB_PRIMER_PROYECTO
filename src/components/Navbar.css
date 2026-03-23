@@ -30,12 +30,18 @@
   gap: 10px;
   cursor: pointer;
   flex-shrink: 0;
+  transition: opacity 0.2s;
 }
 
 .navbar__logo-img {
   width: 36px;
   height: 36px;
   object-fit: contain;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.navbar__logo:hover .navbar__logo-img {
+  transform: rotate(-10deg) scale(1.12);
 }
 
 .navbar__logo-text {
@@ -43,6 +49,11 @@
   font-size: 1.1rem;
   color: var(--azul-oscuro);
   letter-spacing: 1px;
+  transition: letter-spacing 0.3s ease;
+}
+
+.navbar__logo:hover .navbar__logo-text {
+  letter-spacing: 2px;
 }
 
 .navbar__logo-text strong {
@@ -67,6 +78,21 @@
   border-radius: 8px;
   transition: color 0.2s, background 0.2s;
   white-space: nowrap;
+  position: relative;
+}
+
+.navbar__links li button::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  background: var(--azul-claro);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
 }
 
 .navbar__links li button:hover {
@@ -74,7 +100,16 @@
   background: #eef3ff;
 }
 
+.navbar__links li button:hover::after {
+  transform: scaleX(1);
+}
+
 /* CTA */
+@keyframes shimmer-nav {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
 .navbar__cta {
   background: var(--azul-claro);
   color: var(--blanco);
@@ -82,14 +117,35 @@
   font-weight: 600;
   padding: 10px 22px;
   border-radius: 10px;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
   white-space: nowrap;
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar__cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255,255,255,0.28) 50%,
+    transparent 60%
+  );
+  background-size: 400px 100%;
+  background-position: -400px 0;
+}
+
+.navbar__cta:hover::before {
+  animation: shimmer-nav 0.55s ease forwards;
 }
 
 .navbar__cta:hover {
   background: #1d5bc8;
   transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(45,107,228,0.4);
 }
 
 /* HAMBURGER */
@@ -108,7 +164,7 @@
   height: 2px;
   background: var(--azul-oscuro);
   border-radius: 2px;
-  transition: transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .navbar__hamburger--open span:nth-child(1) {
@@ -138,6 +194,12 @@
 
   .navbar__links--open {
     display: flex;
+    animation: fadeDown 0.25s ease both;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .navbar__links li button {
