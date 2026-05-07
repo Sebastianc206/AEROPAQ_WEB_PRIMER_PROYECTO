@@ -1,0 +1,40 @@
+service: aeropaq-backend
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  environment:
+    NODE_ENV: production
+    CORS_ORIGIN: '*'
+
+functions:
+  api:
+    handler: serverless.handler
+    memory: 256
+    timeout: 30
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
+      - httpApi:
+          path: /
+          method: ANY
+
+plugins:
+  - serverless-http
+
+package:
+  individually: true
+  patterns:
+    - '!node_modules/**'
+    - '!.git/**'
+    - '!.gitignore'
+    - '!README*'
+
+custom:
+  httpApi:
+    cors: true
