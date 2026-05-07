@@ -6,8 +6,7 @@ frontend:
     preBuild:
       commands:
         - echo "🔧 Pre-compilación del Frontend"
-        - npm ci --cache .npm --prefer-offline
-        - npm install --legacy-peer-deps
+        - npm install
     
     build:
       commands:
@@ -29,7 +28,6 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - .npm/**/*
 
 # Fase Backend - Express + Node.js
 backend:
@@ -40,8 +38,7 @@ backend:
         - cd backend
         - npm ci --cache .npm --prefer-offline
         - npm install --legacy-peer-deps
-        - cd ..
-    
+        - cd .install
     build:
       commands:
         - echo "🏗️ Backend listo para desplegar"
