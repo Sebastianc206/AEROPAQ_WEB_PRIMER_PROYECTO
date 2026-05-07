@@ -1,0 +1,71 @@
+version: 1
+
+# Fase Frontend - React con Vite
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "🔧 Pre-compilación del Frontend"
+        - npm ci --cache .npm --prefer-offline
+        - npm install --legacy-peer-deps
+    
+    build:
+      commands:
+        - echo "🏗️ Compilando Frontend..."
+        - npm run build
+      
+      # Variables de entorno para el build
+      env:
+        VITE_BACKEND_URL: $BACKEND_URL
+        NODE_ENV: production
+  
+  # Archivos de salida
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  
+  # Cacheo para builds más rápidos
+  cache:
+    paths:
+      - node_modules/**/*
+      - .npm/**/*
+
+# Fase Backend - Express + Node.js
+backend:
+  phases:
+    preBuild:
+      commands:
+        - echo "🔧 Pre-compilación del Backend"
+        - cd backend
+        - npm ci --cache .npm --prefer-offline
+        - npm install --legacy-peer-deps
+        - cd ..
+    
+    build:
+      commands:
+        - echo "🏗️ Backend listo para desplegar"
+        - echo "✅ Node modules instalados"
+      
+      env:
+        NODE_ENV: production
+  
+  artifacts:
+    baseDirectory: backend
+    files:
+      - package.json
+      - package-lock.json
+      - index.js
+      - serverless.js
+      - '**/*.js'
+      - node_modules/**/*
+
+# Variables de entorno globales
+env:
+  variables:
+    BACKEND_URL: $BACKEND_API_ENDPOINT
+    NODE_ENV: production
+    CORS_ORIGIN: https://$AWS_APP_ID.amplifyapp.com
+
+# Post-deploy (opcional)
+# Aquí puedes ejecutar scripts después del despliegue
